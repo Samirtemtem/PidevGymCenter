@@ -1,4 +1,5 @@
 package Controllers;
+import Entities.Product;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -61,6 +62,34 @@ public class RouterController {
             fadeOut.setOnFinished(event -> {
                 primaryStage.setScene(new Scene(root));
                 // Fade in animation
+                FadeTransition fadeIn = new FadeTransition(TRANSITION_DURATION, root);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
+                fadeIn.play();
+            });
+            fadeOut.play();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void navigatepay(String s, Product p) {
+        try {
+            FXMLLoader loader = new FXMLLoader(RouterController.class.getResource(s));
+            AnchorPane root = loader.load();
+
+            GuiPaiementController controller = loader.getController();
+
+
+            if (p != null) {
+                controller.init(p);
+            }
+
+            FadeTransition fadeOut = new FadeTransition(TRANSITION_DURATION, primaryStage.getScene().getRoot());
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(event -> {
+                primaryStage.setScene(new Scene(root));
                 FadeTransition fadeIn = new FadeTransition(TRANSITION_DURATION, root);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);

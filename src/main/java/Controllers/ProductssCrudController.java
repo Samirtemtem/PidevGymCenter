@@ -30,7 +30,31 @@ public class ProductssCrudController {
         initializeTableColumns();
         updateProductList();
     }
+    @FXML
+    private Button sortByNameButton;
 
+// ... existing code ...
+
+    @FXML
+    private void sortByName(ActionEvent event) {
+        TableColumn<Product, ?> nameColumn = getNameColumn();
+
+        if (nameColumn != null) {
+            tableView.getSortOrder().clear(); // Clear existing sorting
+            tableView.getSortOrder().add(nameColumn);
+            nameColumn.setSortType(TableColumn.SortType.ASCENDING);
+            tableView.sort();
+        }
+    }
+
+    private TableColumn<Product, ?> getNameColumn() {
+        for (TableColumn<Product, ?> column : tableView.getColumns()) {
+            if ("Name".equals(column.getText())) {
+                return column;
+            }
+        }
+        return null;
+    }
     public void updateProductList() {
         try {
             List<Product> products = productService.ReadAll();

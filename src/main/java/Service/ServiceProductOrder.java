@@ -13,7 +13,10 @@ public class ServiceProductOrder implements IService<ProductOrder> {
 
     @Override
     public void add(ProductOrder productOrder) throws SQLException {
-        String query = "INSERT INTO product_order (Price, Qty, Status, Product_id, Total_price,id_client) VALUES (?, ?, ?, ?, ?,?)";
+
+        System.out.println(productOrder.latitude);
+        System.out.println(productOrder.longitude);
+        String query = "INSERT INTO product_order (Price, Qty, Status, Product_id, Total_price, id_client, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setFloat(1, productOrder.getPrice());
             stmt.setInt(2, productOrder.getQty());
@@ -21,10 +24,11 @@ public class ServiceProductOrder implements IService<ProductOrder> {
             stmt.setInt(4, productOrder.getProduct_id());
             stmt.setFloat(5, productOrder.getTotal_price());
             stmt.setInt(6, productOrder.getId_client());
+            stmt.setFloat(7, productOrder.latitude);
+            stmt.setFloat(8, productOrder.longitude);
             stmt.executeUpdate();
         }
     }
-
     @Override
     public void update(ProductOrder ProductOrder) throws SQLException {
         String query = "UPDATE product_order SET Price = ?, Qty = ?, Status = ?, Total_price = ?,product_id = ?,id_client = ? WHERE id = ?";

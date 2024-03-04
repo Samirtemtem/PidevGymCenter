@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import Entities.Admin;
+import Entities.User;
 
 /**
  * FXML Controller class
@@ -30,7 +31,7 @@ import Entities.Admin;
  * @author medmo
  */
 public class GuiLoginController implements Initializable {
-    public static Admin user = new Admin();
+    public static User user = new User();
 
     @FXML
     private ImageView btnReturn;
@@ -75,18 +76,20 @@ public class GuiLoginController implements Initializable {
 
     @FXML
     private void login(ActionEvent event) throws SQLException {
-        ServiceAdmin su = new ServiceAdmin();
+        ServiceUser su = new ServiceUser();
 
         String email = emailInput.getText();
         String password = passwordInput.getText();
 
-        user = su.Login(email, password);
+        user = su.login(email, password);
         if (user == null){
             erreur.setText("Email ou mot de passe incorrecte");
         }
         else{  System.out.println("connected");
-            RouterController Router=new RouterController();
-            Router.navigate("../fxml/AdminDashboard.fxml");
+            if (user.getRole().equals(User.Role.ADMIN))
+                RouterController.navigate("../fxml/AdminDashboard.fxml");
+            if (user.getRole().equals(User.Role.CLIENT))
+                RouterController.navigate("../fxml/ProductsList.fxml");
 
         }
     }

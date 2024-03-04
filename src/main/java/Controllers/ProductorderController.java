@@ -31,7 +31,26 @@ public class ProductorderController {
         updateProductOrderList();
     }
 
+    @FXML
+    private void sortByIdClient(ActionEvent event) {
+        TableColumn<ProductOrder, ?> idClientColumn = getIdClientColumn();
 
+        if (idClientColumn != null) {
+            tableView.getSortOrder().clear(); // Clear existing sorting
+            tableView.getSortOrder().add(idClientColumn);
+            idClientColumn.setSortType(TableColumn.SortType.ASCENDING);
+            tableView.sort();
+        }
+    }
+
+    private TableColumn<ProductOrder, ?> getIdClientColumn() {
+        for (TableColumn<ProductOrder, ?> column : tableView.getColumns()) {
+            if ("id_client".equals(column.getText())) {
+                return column;
+            }
+        }
+        return null;
+    }
 
 
     public void updateProductOrderList() {

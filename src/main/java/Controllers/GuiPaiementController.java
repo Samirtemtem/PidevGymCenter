@@ -1,18 +1,26 @@
 package Controllers;
 
-import Entities.Client;
+import Entities.Product;
+import Entities.User;
 import Entities.ProductOrder;
-import Service.ServiceClient;
+import Service.ServiceProduct;
+import Service.ServiceUser;
 import Service.ServiceProductOrder;
 import com.stripe.exception.StripeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -21,6 +29,8 @@ import java.util.regex.Pattern;
 
 public class GuiPaiementController implements Initializable {
 
+    public static String lat;
+    public static String lon;
     @FXML
     private TextField anneeExp;
 
@@ -34,48 +44,66 @@ public class GuiPaiementController implements Initializable {
     private TextField moisExp;
 
     @FXML
-    private Button Pay;
+    private Button pay;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("LAT+"+lat);
+        System.out.println("LONG"+lon);
     }
 
     @FXML
     private void Pay(ActionEvent event) throws StripeException, SQLException {
         ServiceProductOrder scom = new ServiceProductOrder();
         ProductOrder productOrder;
-        ServiceClient sc = new ServiceClient();
-        Client client;
-
+        ServiceUser sc = new ServiceUser();
+        User client;
+        if (!isValidInput())
+            return;
         if (isValidInput()) {
-            // Replace the following line with your payment logic
-            // float f = (float) sb.get(4).getTotalCostTTC() * 32;
-            // int k = floatToInt(f);
-            // PaymentApi.pay(k);
+            float f = (float) product.getPrice()*100;
+            int k = floatToInt(f);
+            String url=PaymentApi.pay(k);
 
-            // Insert your logic for payment success
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Paiement");
-            alert.setContentText("Paiement effectué avec succès");
+            alert.setContentText("Paiement effectué avec succès, Votre Commande a été enregistré");
             alert.showAndWait();
+            Stage stage = new Stage ();
 
-            // Assuming you have a client ID and product ID
-            int clientId = 1; // Replace with actual client ID
-            int productId = 1; // Replace with actual product ID
+            final WebView webView = new WebView();
+            final WebEngine webEngine = webView.getEngine();
+            webView.getEngine().load(url);
 
-            // Creating a product order
-            productOrder = new ProductOrder();
-            productOrder.setPrice(20.0f); // Replace with actual product price
-            productOrder.setQty(1); // Replace with actual quantity
-            productOrder.setStatus("Paid");
-            productOrder.setProduct_id(productId);
-            productOrder.setTotal_price(productOrder.getPrice() * productOrder.getQty());
-            productOrder.setId_client(clientId);
+            // create scene
+            //   stage.getIcons().add(new Image("/Images/logo.png"));
+            stage.setTitle("localisation");
+            Scene scene = new Scene(webView,1000,700, Color.web("#666970"));
+            stage.setScene(scene);
+            // show stage
+            stage.show();
 
-            // Saving the product order
-            scom.add(productOrder);
         }
+
+        int productId = product.getId();
+        int clientId=GuiLoginController.user.getId();
+        if(clientId==0)
+            clientId=1;
+        // Creating a product order
+        productOrder = new ProductOrder();
+        productOrder.setPrice(20.0f); // Replace with actual product price
+        productOrder.setQty(1); // Replace with actual quantity
+        productOrder.setStatus("Paid");
+        productOrder.setProduct_id(productId);
+        productOrder.setTotal_price(productOrder.getPrice() * productOrder.getQty());
+        productOrder.setId_client(clientId);
+        productOrder.latitude= Float.parseFloat(GuiPaiementController.lat);
+        productOrder.longitude= Float.parseFloat(GuiPaiementController.lon);
+        ServiceProduct p=new ServiceProduct();
+        product.setStockQty(product.getStockQty()-1);
+        p.update(product);
+        // Saving the product order
+        scom.add(productOrder);
     }
 
     private boolean isValidInput() {
@@ -125,5 +153,13 @@ public class GuiPaiementController implements Initializable {
 
     public static int floatToInt(float value) {
         return (int) value;
+    }
+    private Product product;
+    public void init(Product p) {
+        this.product=p;
+        this.pay.setText("Payer "+p.getPrice()+"dinars");
+    }
+
+    public void savecoords(String latitude, String longitude) {
     }
 }

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,10 +16,11 @@ public class AdminDashboardController {
         adminNameLabel.setText(name);
     }
     public void goToLogn(MouseEvent mouseEvent) {
+        RouterController.navigate("/fxml/Login/Login.fxml");
     }
 
     public void goToNavigate(ActionEvent actionEvent) {
-        RouterController.navigate("/fxml/AdminDashboard");
+        RouterController.navigate("/fxml/AdminDashboard.fxml");
     }
 
     public void goToUsers(MouseEvent mouseEvent) {
@@ -42,5 +44,9 @@ public class AdminDashboardController {
     }
 
     public void goToLivraisons(MouseEvent mouseEvent) {
+    }
+
+    public void openstats(ActionEvent event) {
+        RouterController.navigate("/fxml/StatsProduct.fxml");
     }
 }

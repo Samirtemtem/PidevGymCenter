@@ -4,6 +4,19 @@ package Entities;
  *
  */
 public class ProductOrder {
+	@Override
+	public String toString() {
+		return "ProductOrder{" +
+				"Id=" + Id +
+				", Price=" + Price +
+				", Qty=" + Qty +
+				", Status='" + Status + '\'' +
+				", Product_id=" + Product_id +
+				", id_client=" + id_client +
+				", Total_price=" + Total_price +
+				"="+latitude+" "+longitude+
+				'}';
+	}
 
 	public ProductOrder(Float price, int qty, String status, int product_id, int id_client, Float total_price) {
 		Price = price;
@@ -81,9 +94,29 @@ public class ProductOrder {
 	public ProductOrder() {
 
 	}
-
-
-
+	public ProductOrder(Float price, int qty, String status, int product_id, int id_client, Float total_price, float latitude, float longitude) {
+		Price = price;
+		Qty = qty;
+		Status = status;
+		Product_id = product_id;
+		this.id_client = id_client;
+		Total_price = total_price;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	public ProductOrder(int id,Float price, int qty, String status, int product_id, int id_client, Float total_price, float latitude, float longitude) {
+		Id=id;
+		Price = price;
+		Qty = qty;
+		Status = status;
+		Product_id = product_id;
+		this.id_client = id_client;
+		Total_price = total_price;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	public float latitude;
+	public float longitude;
 	public int getId() {
 		return Id;
 	}

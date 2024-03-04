@@ -3,9 +3,11 @@ package Controllers;
 import Entities.Client;
 import Entities.Product;
 import Entities.ProductOrder;
+import Entities.User;
 import Service.ServiceClient;
 import Service.ServiceProduct;
 import Service.ServiceProductOrder;
+import Service.ServiceUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,7 @@ public class AddProductOrderController {
     @FXML
     private ComboBox<Product> productComboBox;
     @FXML
-    private ComboBox<Client> ClientcomboBox;
+    private ComboBox<User> ClientcomboBox;
     @FXML
     private TextField qty;
     @FXML
@@ -35,7 +37,7 @@ public class AddProductOrderController {
     private TextField Price;
 
     private ServiceProductOrder serviceProductOrder = new ServiceProductOrder();
-    private ObservableList<Client> clientList = FXCollections.observableArrayList();
+    private ObservableList<User> clientList = FXCollections.observableArrayList();
     private ObservableList<Product> productList = FXCollections.observableArrayList();
 
     @FXML
@@ -44,7 +46,7 @@ public class AddProductOrderController {
             ServiceProduct spo = new ServiceProduct();
             productList.addAll(spo.ReadAll());
 
-            ServiceClient spoo = new ServiceClient();
+            ServiceUser spoo = new ServiceUser();
             clientList.addAll(spoo.ReadAll());
 
             // Initialize ComboBoxes

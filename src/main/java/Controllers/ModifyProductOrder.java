@@ -3,9 +3,11 @@ package Controllers;
 import Entities.Client;
 import Entities.Product;
 import Entities.ProductOrder;
+import Entities.User;
 import Service.ServiceClient;
 import Service.ServiceProduct;
 import Service.ServiceProductOrder;
+import Service.ServiceUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -35,10 +37,10 @@ public class ModifyProductOrder implements Initializable,InitializableController
     @FXML
     private ComboBox<Product> productComboBox;
     @FXML
-    private ComboBox<Client> clientComboBox;
+    private ComboBox<User> clientComboBox;
 
     private ObservableList<Product> productList = FXCollections.observableArrayList();
-    private ObservableList<Client> clientList = FXCollections.observableArrayList();
+    private ObservableList<User> clientList = FXCollections.observableArrayList();
 
 
 
@@ -50,7 +52,7 @@ public class ModifyProductOrder implements Initializable,InitializableController
         try {
             ServiceProduct spo=new ServiceProduct();
             productList.addAll(spo.ReadAll());
-            ServiceClient spoo=new ServiceClient();
+            ServiceUser spoo=new ServiceUser();
             clientList.addAll(spoo.ReadAll());
             ProductOrder productOrder = ServiceProductOrder.findById(Id);
 
@@ -61,7 +63,7 @@ public class ModifyProductOrder implements Initializable,InitializableController
 
                 // Find the product name corresponding to the product ID
                 Product selectedProduct=spo.findById(productId);
-                Client selectedClient=spoo.findById(id_client);
+                User selectedClient=spoo.findById(id_client);
 
                 // Set the selected product in the ComboBox
                 productComboBox.setValue(selectedProduct);

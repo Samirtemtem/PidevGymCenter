@@ -64,7 +64,7 @@
         </ImageView>
         <AnchorPane layoutX="75.0" layoutY="93.0" prefHeight="523.0" prefWidth="876.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;" stylesheets="@guiadmin.css">
             <children>
-                <Pane layoutX="148.0" layoutY="191.0" onMouseClicked="#goToUsers" prefHeight="172.0" prefWidth="252.0" style="-fx-background-color: #e6f7bc; -fx-background-radius: 7;">
+                <Pane layoutX="53.0" layoutY="97.0" onMouseClicked="#goToUsers" prefHeight="172.0" prefWidth="252.0" style="-fx-background-color: #e6f7bc; -fx-background-radius: 7;">
                     <children>
                         <Label layoutX="27.0" layoutY="79.0" onMouseClicked="#goToUsers" prefHeight="36.0" prefWidth="217.0" text="Commandes">
                             <font>
@@ -78,7 +78,7 @@
                         </Label>
                   <ImageView fitHeight="58.0" fitWidth="49.0" layoutX="27.0" layoutY="21.0" onMouseClicked="#goToCommands" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../Downloads/Artzii-Java-main/Artzii%20java%20application/build/classes/resources/iconOrder.png" />
+                        <Image url="@/assets/iconOrder.png" />
                      </image>
                   </ImageView>
                     </children>
@@ -96,7 +96,7 @@
                         <Font name="System Bold" size="25.0" />
                     </font>
                 </Label>
-                <Pane layoutX="521.0" layoutY="191.0" onMouseClicked="#goToActivities" prefHeight="172.0" prefWidth="252.0" style="-fx-background-color: #e6f7bc; -fx-background-radius: 7;">
+                <Pane layoutX="603.0" layoutY="90.0" onMouseClicked="#goToActivities" prefHeight="172.0" prefWidth="252.0" style="-fx-background-color: #e6f7bc; -fx-background-radius: 7;">
                     <children>
                         <Label layoutX="27.0" layoutY="79.0" onMouseClicked="#goToActivities" prefHeight="36.0" prefWidth="217.0" text="Produits">
                             <font>
@@ -118,6 +118,7 @@
                         <DropShadow />
                     </effect>
                 </Pane>
+            <Button layoutX="412.0" layoutY="170.0" mnemonicParsing="false" onAction="#openstats" text="Voir Stats" />
             </children>
         </AnchorPane>
     </children>

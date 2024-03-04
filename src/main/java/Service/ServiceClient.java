@@ -58,7 +58,7 @@ public class ServiceClient implements IService<Client> {
 
     @Override
     public Client findById(int id) throws SQLException {
-        String query = "SELECT * FROM client WHERE id_c = ?";
+        String query = "SELECT * FROM users WHERE id = ?";
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
@@ -74,7 +74,7 @@ public class ServiceClient implements IService<Client> {
     @Override
     public List<Client> ReadAll() throws SQLException {
         List<Client> clients = new ArrayList<>();
-        String query = "SELECT * FROM client";
+        String query = "SELECT * FROM users";
         try (PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
